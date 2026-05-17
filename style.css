@@ -1,0 +1,639 @@
+/* ==========================================================================
+   Neon Marble Race - CSS Stylesheet
+   Design Theme: Premium Cyberpunk Glassmorphic Dark Mode
+   ========================================================================== */
+
+/* 1. Root Variables & Theme Definition */
+:root {
+    --bg-dark-deep: #060608;
+    --bg-dark-main: #0c0d12;
+    --bg-dark-card: rgba(18, 20, 29, 0.7);
+    --bg-glass-input: rgba(10, 11, 16, 0.8);
+    
+    --border-glass: rgba(255, 255, 255, 0.06);
+    --border-glass-glow: rgba(0, 240, 255, 0.2);
+
+    /* Neon System Palette */
+    --neon-pink: #ff007f;
+    --neon-pink-glow: rgba(255, 0, 127, 0.4);
+    --neon-blue: #00f0ff;
+    --neon-blue-glow: rgba(0, 240, 255, 0.4);
+    --neon-green: #39ff14;
+    --neon-green-glow: rgba(57, 255, 20, 0.4);
+    --neon-purple: #bd00ff;
+    --neon-purple-glow: rgba(189, 0, 255, 0.4);
+    --neon-yellow: #fff000;
+    --neon-yellow-glow: rgba(255, 240, 0, 0.4);
+    --neon-orange: #ff5e00;
+
+    --text-primary: #f0f2f8;
+    --text-secondary: #909bb4;
+    --text-dark: #4b5563;
+
+    --font-primary: 'Outfit', sans-serif;
+    --font-cyber: 'Rajdhani', sans-serif;
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 2. Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--neon-blue) rgba(0, 0, 0, 0.2);
+}
+
+body {
+    background-color: var(--bg-dark-deep);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    background-image: 
+        radial-gradient(at 10% 20%, rgba(189, 0, 255, 0.05) 0px, transparent 50%),
+        radial-gradient(at 90% 80%, rgba(0, 240, 255, 0.05) 0px, transparent 50%);
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.15);
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 240, 255, 0.3);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neon-blue);
+    box-shadow: 0 0 10px var(--neon-blue-glow);
+}
+
+/* 3. Layout Architecture */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+}
+
+/* 4. Sidebar Styles */
+.sidebar {
+    width: 380px;
+    min-width: 340px;
+    background: var(--bg-dark-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border-glass);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 10;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+}
+
+/* Sidebar Logo Area */
+.logo-area {
+    text-align: center;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 20px;
+}
+.logo-icon {
+    font-size: 2.2rem;
+    color: var(--neon-blue);
+    text-shadow: 0 0 15px var(--neon-blue-glow);
+    margin-bottom: 8px;
+    animation: pulsate 2s infinite ease-in-out;
+}
+.logo-text {
+    font-family: var(--font-cyber);
+    font-weight: 800;
+    font-size: 2rem;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+.logo-text span {
+    color: var(--neon-pink);
+    text-shadow: 0 0 15px var(--neon-pink-glow);
+}
+.subtitle {
+    font-family: var(--font-cyber);
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Sidebar Config Panel */
+.config-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.input-group label {
+    font-family: var(--font-cyber);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.input-group label i {
+    color: var(--neon-blue);
+}
+.badge {
+    background: rgba(0, 240, 255, 0.15);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: var(--neon-blue);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+/* Textarea styling */
+textarea {
+    width: 100%;
+    height: 120px;
+    background: var(--bg-glass-input);
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    color: var(--text-primary);
+    padding: 12px;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    resize: none;
+    outline: none;
+    transition: var(--transition-smooth);
+}
+textarea:focus {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Custom Select Dropdown */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+select {
+    width: 100%;
+    background: var(--bg-glass-input);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    padding: 12px 40px 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: var(--font-primary);
+    outline: none;
+    appearance: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+select:focus {
+    border-color: var(--neon-pink);
+    box-shadow: 0 0 12px rgba(255, 0, 127, 0.25);
+}
+.select-arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* Custom Range Sliders */
+.advanced-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-glass);
+    padding: 12px;
+    border-radius: 8px;
+}
+.setting-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.setting-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+.setting-label i {
+    color: var(--neon-green);
+    margin-right: 4px;
+}
+input[type="range"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--neon-green);
+    box-shadow: 0 0 10px var(--neon-green-glow);
+    transition: transform 0.1s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Styled Action Buttons */
+.control-actions {
+    display: flex;
+    gap: 12px;
+}
+.btn {
+    flex: 1;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-family: var(--font-cyber);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+}
+.btn-primary {
+    background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.btn-primary:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 4px 20px rgba(255, 0, 127, 0.5);
+    transform: translateY(-2px);
+}
+.btn-primary:active {
+    transform: translateY(0);
+}
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+}
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* 5. Live Leaderboard System */
+.leaderboard-panel {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 16px;
+    max-height: 280px;
+    min-height: 180px;
+}
+.leaderboard-panel h3 {
+    font-family: var(--font-cyber);
+    font-size: 0.9rem;
+    letter-spacing: 1.5px;
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-blue-glow);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.leaderboard-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 4px;
+}
+.empty-leaderboard {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-top: 30px;
+    line-height: 1.5;
+}
+
+/* Leaderboard Row Items */
+.leader-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-glass);
+    border-radius: 6px;
+    padding: 8px 12px;
+    transition: var(--transition-smooth);
+    animation: slideIn 0.3s ease-out;
+}
+.leader-row:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+.leader-rank {
+    font-family: var(--font-cyber);
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 24px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+.leader-row.rank-1 .leader-rank { color: var(--neon-yellow); text-shadow: 0 0 8px var(--neon-yellow-glow); }
+.leader-row.rank-2 .leader-rank { color: #d1d5db; }
+.leader-row.rank-3 .leader-rank { color: var(--neon-orange); }
+
+.leader-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+    flex-shrink: 0;
+}
+.leader-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    color: var(--text-primary);
+}
+.leader-progress {
+    font-family: var(--font-cyber);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue-glow);
+}
+
+/* 6. Sidebar Footer */
+.sidebar-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border-glass);
+    padding-top: 16px;
+}
+.btn-sound-toggle {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--font-cyber);
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+}
+.btn-sound-toggle.active {
+    color: var(--neon-blue);
+    text-shadow: 0 0 8px var(--neon-blue-glow);
+}
+.btn-sound-toggle:hover {
+    color: #fff;
+}
+.engine-tag {
+    font-family: var(--font-cyber);
+    font-size: 0.75rem;
+    color: var(--text-dark);
+}
+
+/* 7. Canvas Main Screen Container */
+.canvas-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-dark-deep);
+    padding: 24px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+.canvas-header {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.course-badge {
+    background: rgba(189, 0, 255, 0.15);
+    border: 1px solid var(--neon-purple);
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-family: var(--font-cyber);
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px rgba(189, 0, 255, 0.25);
+}
+.status-indicator {
+    font-family: var(--font-cyber);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--neon-green);
+    text-shadow: 0 0 8px var(--neon-green-glow);
+}
+
+/* Canvas Wrapper & Ratio preservation */
+.canvas-wrapper {
+    width: 100%;
+    max-width: 600px;
+    height: calc(100vh - 120px);
+    max-height: 1200px;
+    aspect-ratio: 1 / 2;
+    background: rgba(10, 11, 16, 0.95);
+    border: 1px solid var(--border-glass-glow);
+    border-radius: 16px;
+    box-shadow: 0 0 35px rgba(0, 240, 255, 0.12);
+    overflow: hidden;
+    position: relative;
+}
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+/* 8. Modern Celebration Winner Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease-out;
+}
+.modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.modal-content {
+    background: rgba(12, 13, 20, 0.92);
+    border: 1px solid rgba(255, 0, 127, 0.25);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 460px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 
+        0 15px 40px rgba(0,0,0,0.6),
+        0 0 40px rgba(255, 0, 127, 0.15);
+    position: relative;
+    overflow: hidden;
+    transform: scale(0.85) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.modal-overlay.show .modal-content {
+    transform: scale(1) translateY(0);
+}
+.modal-glow {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255, 0, 127, 0.18) 0%, transparent 70%);
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+.celebration-icon {
+    font-size: 3.5rem;
+    color: var(--neon-yellow);
+    text-shadow: 0 0 20px var(--neon-yellow-glow);
+    margin-bottom: 16px;
+    animation: float 2.5s infinite ease-in-out;
+}
+.congrats-title {
+    font-family: var(--font-cyber);
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+.winner-label {
+    font-family: var(--font-cyber);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    text-transform: uppercase;
+}
+.winner-name {
+    font-size: 2.6rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--neon-pink), var(--neon-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 8px 0 24px;
+    padding: 0 10px;
+    text-shadow: 0 0 30px rgba(255, 0, 127, 0.2);
+    display: inline-block;
+    letter-spacing: 1px;
+}
+.celebration-sub {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+.modal-close-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+/* 9. Interactive Keyframe Animations */
+@keyframes pulsate {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.05); filter: brightness(1.2); }
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(5deg); }
+}
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Media Queries */
+@media (max-width: 960px) {
+    .app-container {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 45%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-glass);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .canvas-container {
+        flex-grow: 1;
+        padding: 16px;
+        height: 55%;
+    }
+    .canvas-wrapper {
+        height: 100%;
+        max-height: 500px;
+    }
+}

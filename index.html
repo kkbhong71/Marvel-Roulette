@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네온 마블 룰렛 - 극한의 구슬 레이스</title>
+    <!-- Google Fonts - Outfit & Rajdhani (사이버펑크 느낌의 고품질 폰트) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome 아이콘 CDN (UI 장식용) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 좌측 사이드바: 설정 및 입력창 -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-circle-nodes logo-icon"></i>
+                <h1 class="logo-text">NEON<span>MARBLE</span></h1>
+                <p class="subtitle">EXTREME PHYSICS RACE</p>
+            </div>
+
+            <div class="config-panel">
+                <!-- 후보 이름 입력 영역 -->
+                <div class="input-group">
+                    <label for="candidates-input">
+                        <i class="fa-solid fa-users"></i> 참가자 목록 <span class="badge" id="candidate-count">0</span>
+                    </label>
+                    <textarea id="candidates-input" placeholder="후보 이름을 입력하세요.&#10;(줄바꿈 또는 쉼표로 구분)&#10;예시:&#10;정우성, 이정재, 황정민, 송강호&#10;유재석&#10;신동엽"></textarea>
+                </div>
+
+                <!-- 코스 테마 선택 -->
+                <div class="input-group">
+                    <label for="theme-select">
+                        <i class="fa-solid fa-map"></i> 코스 테마 선택
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="theme-select">
+                            <option value="plinko">🌌 테마 1: 플린코 익스트림</option>
+                            <option value="vortex">🌀 테마 2: 소용돌이 다운힐</option>
+                            <option value="zigzag">⚡ 테마 3: 지그재그 슬라이드</option>
+                            <option value="pinball">🕹️ 테마 4: 핀볼 범퍼 익스프레스</option>
+                            <option value="portal">🌀 테마 5: 웜홀 포탈 레이싱</option>
+                            <option value="booster">🚀 테마 6: 무중력 스페이스 부스터</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+
+                <!-- 물리 세부 조절 슬라이더 (사용자 커스텀 WOW 요소) -->
+                <div class="advanced-settings">
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span><i class="fa-solid fa-weight-hanging"></i> 중력 세기</span>
+                            <span id="gravity-val">1.0x</span>
+                        </div>
+                        <input type="range" id="gravity-slider" min="0.2" max="2.0" step="0.1" value="1.0">
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-label">
+                            <span><i class="fa-solid fa-bolt"></i> 구슬 탄성</span>
+                            <span id="bounciness-val">0.6</span>
+                        </div>
+                        <input type="range" id="bounciness-slider" min="0.1" max="0.9" step="0.05" value="0.6">
+                    </div>
+                </div>
+
+                <!-- 시작 및 제어 버튼 -->
+                <div class="control-actions">
+                    <button id="btn-start" class="btn btn-primary">
+                        <i class="fa-solid fa-play"></i> 레이스 시작
+                    </button>
+                    <button id="btn-reset" class="btn btn-secondary">
+                        <i class="fa-solid fa-rotate-left"></i> 재설정
+                    </button>
+                </div>
+            </div>
+
+            <!-- 실시간 리더보드 (실시간으로 구슬의 고저차에 따라 순위 갱신) -->
+            <div class="leaderboard-panel">
+                <h3><i class="fa-solid fa-trophy"></i> LIVE LEADERBOARD</h3>
+                <div class="leaderboard-list" id="leaderboard-list">
+                    <div class="empty-leaderboard">구슬을 굴려 레이스를 시작하세요!</div>
+                </div>
+            </div>
+
+            <!-- 하단 정보 영역 및 오디오 토글 -->
+            <div class="sidebar-footer">
+                <button id="btn-sound" class="btn-sound-toggle active">
+                    <i class="fa-solid fa-volume-high"></i> <span id="sound-status-text">사운드 켬</span>
+                </button>
+                <div class="engine-tag">Matter.js Physics v0.19</div>
+            </div>
+        </aside>
+
+        <!-- 우측 메인 영역: 레이스 캔버스 -->
+        <main class="canvas-container">
+            <div class="canvas-header">
+                <div class="course-badge" id="active-theme-badge">테마 1: 플린코 익스트림</div>
+                <div class="status-indicator" id="game-status-indicator">대기 중...</div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="race-canvas" width="600" height="1200"></canvas>
+            </div>
+        </main>
+    </div>
+
+    <!-- 우승 축하 오버레이 팝업 모달 -->
+    <div class="modal-overlay" id="winner-modal">
+        <div class="modal-content">
+            <div class="modal-glow"></div>
+            <div class="celebration-icon">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+            <h2 class="congrats-title">VICTORY!</h2>
+            <p class="winner-label">최종 우승자</p>
+            <div class="winner-name" id="winner-name-display">정우성</div>
+            <p class="celebration-sub">빛나는 네온의 질주 끝에 골인에 성공했습니다!</p>
+            <button id="btn-close-modal" class="btn btn-primary modal-close-btn">
+                <i class="fa-solid fa-check"></i> 확인
+            </button>
+        </div>
+    </div>
+
+    <!-- Matter.js 물리 엔진 CDN 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
